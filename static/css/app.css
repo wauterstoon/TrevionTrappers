@@ -1,0 +1,9 @@
+.card-sport {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+.rank-highlight {
+  outline: 3px solid #ffc107;
+}
+.status-badge {font-size:.75rem;}

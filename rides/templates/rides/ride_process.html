@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3">Na-rit verwerking: {{ ride.title }}</h1>
+<form method="post" class="card card-sport p-3">{% csrf_token %}
+<table class="table align-middle">
+<tr><th>Rijder</th><th>Status</th><th>Km</th></tr>
+{% for p in participations %}
+<tr>
+<td>{{ p.user.display_name }}</td>
+<td><select name="status_{{ p.id }}" class="form-select form-select-sm">{% for value,label in status_choices %}<option value="{{ value }}" {% if p.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></td>
+<td><input type="number" step="0.1" name="km_{{ p.id }}" value="{{ p.km }}" class="form-control form-control-sm"></td>
+</tr>
+{% endfor %}
+</table>
+<div class="form-check mb-3"><input type="checkbox" value="1" name="close_ride" class="form-check-input" id="close"><label for="close" class="form-check-label">Rit afsluiten</label></div>
+<button class="btn btn-success">Opslaan</button>
+</form>
+{% endblock %}

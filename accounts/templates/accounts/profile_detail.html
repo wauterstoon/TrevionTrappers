@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card card-sport p-4 mb-4">
+  <div class="d-flex justify-content-between align-items-start">
+    <div>
+      <h1 class="h3">{{ profile_user.display_name }}</h1>
+      <p class="text-muted mb-1">@{{ profile_user.username }}</p>
+      <p class="mb-0">Seizoen: <strong>{{ season_total }} km</strong> | All-time: <strong>{{ total_km }} km</strong></p>
+      <p class="mb-0">Uitgereden ritten: <strong>{{ total_finished }}</strong></p>
+    </div>
+    {% if profile_user.avatar %}<img src="{{ profile_user.avatar }}" alt="avatar" style="width:72px;height:72px;border-radius:50%;object-fit:cover;">{% endif %}
+  </div>
+  {% if user == profile_user %}<a class="btn btn-outline-primary mt-3" href="{% url 'profile_edit' %}">Profiel aanpassen</a>{% endif %}
+</div>
+<h2 class="h5">Laatste 20 ritten</h2>
+<table class="table table-striped">
+<tr><th>Datum</th><th>Rit</th><th>Km</th></tr>
+{% for p in recent_rides %}
+<tr><td>{{ p.ride.date }}</td><td><a href="{% url 'ride_detail' p.ride.pk %}">{{ p.ride.title }}</a></td><td>{{ p.km }}</td></tr>
+{% empty %}<tr><td colspan="3">Nog geen afgewerkte ritten.</td></tr>{% endfor %}
+</table>
+{% endblock %}

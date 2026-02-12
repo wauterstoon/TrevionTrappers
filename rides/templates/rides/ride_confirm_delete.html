@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h4">Rit verwijderen</h1>
+<p>Ben je zeker dat je <strong>{{ ride.title }}</strong> wil verwijderen?</p>
+<form method="post">{% csrf_token %}<button class="btn btn-danger">Verwijderen</button></form>
+{% endblock %}

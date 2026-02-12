@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3 mb-3">Ritten</h1>
+<form class="row g-2 mb-3">
+  <div class="col-auto"><select name="scope" class="form-select"><option value="upcoming" {% if scope == 'upcoming' %}selected{% endif %}>Komende</option><option value="past" {% if scope == 'past' %}selected{% endif %}>Afgelopen</option></select></div>
+  <div class="col-auto"><select name="period" class="form-select"><option value="all">Alle</option><option value="week" {% if period == 'week' %}selected{% endif %}>Week</option><option value="month" {% if period == 'month' %}selected{% endif %}>Maand</option></select></div>
+  <div class="col-auto"><button class="btn btn-outline-primary">Filter</button></div>
+</form>
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+<tr><th>Datum</th><th>Titel</th><th>Niveau</th><th>Afstand</th><th>Status</th><th></th></tr>
+{% for ride in rides %}
+<tr><td>{{ ride.date }} {{ ride.start_time|time:'H:i' }}</td><td>{{ ride.title }}</td><td>{{ ride.get_level_display }}</td><td>{{ ride.distance_km }} km</td><td><span class="badge bg-secondary">{{ ride.status }}</span></td><td><a href="{% url 'ride_detail' ride.pk %}" class="btn btn-sm btn-primary">Detail</a></td></tr>
+{% empty %}<tr><td colspan="6">Geen ritten.</td></tr>{% endfor %}
+</table>
+</div>
+{% endblock %}

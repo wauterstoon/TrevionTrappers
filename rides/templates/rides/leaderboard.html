@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3">Klassement</h1>
+<form class="row g-2 mb-3">
+  <div class="col-auto"><select name="season" class="form-select">{% for y in years %}<option value="{{ y }}" {% if y == season %}selected{% endif %}>{{ y }}</option>{% endfor %}</select></div>
+  <div class="col-auto"><select name="last_days" class="form-select"><option value="">Heel seizoen</option><option value="30" {% if last_days == '30' %}selected{% endif %}>Laatste 30 dagen</option></select></div>
+  <div class="col-auto"><button class="btn btn-outline-primary">Toepassen</button></div>
+</form>
+<div class="table-responsive">
+<table class="table table-striped">
+<tr><th>#</th><th>Naam</th><th>Punten (km)</th><th>Uitgereden ritten</th></tr>
+{% for row in board %}
+<tr class="{% if row.user__id == user.id %}rank-highlight{% endif %}"><td>{{ row.rank }}</td><td>{{ row.user__username }}</td><td><strong>{{ row.points }}</strong></td><td>{{ row.finished_count }}</td></tr>
+{% empty %}<tr><td colspan="4">Nog geen resultaten.</td></tr>{% endfor %}
+</table>
+</div>
+{% if my_rank %}<p class="fw-semibold">Jouw positie: #{{ my_rank }}</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3">{% if mode == 'create' %}Nieuwe rit{% else %}Rit bewerken{% endif %}</h1>
+<form method="post" class="card card-sport p-4">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary">Opslaan</button>
+</form>
+{% endblock %}
