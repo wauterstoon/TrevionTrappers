@@ -7,6 +7,9 @@
       <p class="mb-1">{{ ride.date }} • {{ ride.start_time|time:'H:i' }} • {{ ride.departure }}</p>
       <p class="mb-1">{{ ride.distance_km }} km • {{ ride.get_level_display }}</p>
       <p class="text-muted">{{ ride.notes|default:'Geen notities' }}</p>
+      {% if ride.gpx_file %}
+      <p class="mb-0"><a href="{{ ride.gpx_file.url }}" class="btn btn-sm btn-outline-secondary" download>Download GPX</a></p>
+      {% endif %}
     </div>
     <div class="text-end">
       <span class="badge bg-dark">{{ ride.status }}</span>
