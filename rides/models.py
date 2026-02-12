@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import Sum, Count, DecimalField, Value
 from django.db.models.functions import Coalesce
@@ -24,7 +25,12 @@ class Ride(models.Model):
     distance_km = models.DecimalField(max_digits=6, decimal_places=1)
     level = models.CharField(max_length=10, choices=Level.choices, default=Level.EASY)
     notes = models.TextField(blank=True)
-    max_participants = models.PositiveIntegerField(blank=True, null=True)
+    gpx_file = models.FileField(
+        upload_to='gpx/',
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(allowed_extensions=['gpx'])],
+    )
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.OPEN)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_rides')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,8 +52,6 @@ class Ride(models.Model):
         now = timezone.localtime()
         ride_start = timezone.make_aware(timezone.datetime.combine(self.date, self.start_time))
         if now >= ride_start:
-            return False
-        if self.max_participants and self.participant_count >= self.max_participants:
             return False
         return True
 

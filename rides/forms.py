@@ -14,7 +14,7 @@ class RideForm(forms.ModelForm):
             'distance_km',
             'level',
             'notes',
-            'max_participants',
+            'gpx_file',
             'status',
         ]
         widgets = {

@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="h3">Klassement</h1>
-<form class="row g-2 mb-3">
+<form class="row g-2 mb-4">
   <div class="col-auto"><select name="season" class="form-select">{% for y in years %}<option value="{{ y }}" {% if y == season %}selected{% endif %}>{{ y }}</option>{% endfor %}</select></div>
   <div class="col-auto"><select name="last_days" class="form-select"><option value="">Heel seizoen</option><option value="30" {% if last_days == '30' %}selected{% endif %}>Laatste 30 dagen</option></select></div>
   <div class="col-auto"><button class="btn btn-outline-primary">Toepassen</button></div>
 </form>
+
+{% if podium %}
+<div class="podium mb-4">
+  {% for row in podium %}
+  <article class="podium-card podium-rank-{{ row.rank }} {% if row.user__id == user.id %}rank-highlight{% endif %}">
+    <div class="podium-place">#{{ row.rank }}</div>
+    <div class="podium-name">{{ row.user__username }}</div>
+    <div class="podium-points">{{ row.points }} km</div>
+    <div class="podium-finish">{{ row.finished_count }} ritten</div>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}
+
 <div class="table-responsive">
 <table class="table table-striped">
 <tr><th>#</th><th>Naam</th><th>Punten (km)</th><th>Uitgereden ritten</th></tr>
-{% for row in board %}
+{% for row in ranking_list %}
 <tr class="{% if row.user__id == user.id %}rank-highlight{% endif %}"><td>{{ row.rank }}</td><td>{{ row.user__username }}</td><td><strong>{{ row.points }}</strong></td><td>{{ row.finished_count }}</td></tr>
-{% empty %}<tr><td colspan="4">Nog geen resultaten.</td></tr>{% endfor %}
+{% empty %}
+  {% if not podium %}<tr><td colspan="4">Nog geen resultaten.</td></tr>{% endif %}
+{% endfor %}
 </table>
 </div>
 {% if my_rank %}<p class="fw-semibold">Jouw positie: #{{ my_rank }}</p>{% endif %}
