@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3">Dashboard</h1>
+  <a class="btn btn-primary" href="{% url 'ride_create' %}">+ Nieuwe rit</a>
+</div>
+<div class="row g-4">
+  <div class="col-lg-8">
+    <h2 class="h5">Komende ritten</h2>
+    <div class="row g-3">
+      {% for ride in upcoming %}
+      <div class="col-md-6">
+        <div class="card card-sport p-3">
+          <div class="d-flex justify-content-between"><strong>{{ ride.title }}</strong><span class="badge bg-info">{{ ride.get_level_display }}</span></div>
+          <div>{{ ride.date }} • {{ ride.start_time|time:'H:i' }}</div>
+          <div>{{ ride.departure }} • {{ ride.distance_km }} km</div>
+          <a class="btn btn-sm btn-outline-primary mt-2" href="{% url 'ride_detail' ride.pk %}">Bekijk</a>
+        </div>
+      </div>
+      {% empty %}<p>Geen ritten gepland.</p>{% endfor %}
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <h2 class="h5">Topklassement</h2>
+    <div class="card card-sport p-3">
+      <ol class="mb-0">
+      {% for row in leaderboard %}
+        <li>{{ row.user__username }} - <strong>{{ row.points }} km</strong></li>
+      {% empty %}<li>Nog geen resultaten.</li>{% endfor %}
+      </ol>
+    </div>
+  </div>
+</div>
+{% endblock %}
