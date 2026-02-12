@@ -1,3 +1,30 @@
+:root {
+  --tt-deep-blue: #0f5d75;
+  --tt-light-blue: #c4e7fb;
+  --tt-green: #337838;
+  --tt-cyan: #008eaf;
+  --tt-lime: #a2c617;
+
+  --bs-primary: var(--tt-cyan);
+  --bs-primary-rgb: 0, 142, 175;
+  --bs-secondary: var(--tt-deep-blue);
+  --bs-secondary-rgb: 15, 93, 117;
+  --bs-success: var(--tt-green);
+  --bs-success-rgb: 51, 120, 56;
+  --bs-warning: var(--tt-lime);
+  --bs-warning-rgb: 162, 198, 23;
+  --bs-info: var(--tt-light-blue);
+  --bs-info-rgb: 196, 231, 251;
+}
+
+.tt-body-bg {
+  background: linear-gradient(180deg, #f4fbff 0%, #e6f5fd 100%);
+}
+
+.tt-navbar {
+  background-color: var(--tt-deep-blue);
+}
+
 .card-sport {
   border: 0;
   border-radius: 1rem;
@@ -36,7 +63,7 @@
 
 .podium-place { font-weight: 700; font-size: 1.2rem; }
 .podium-name { font-weight: 600; }
-.podium-points { font-size: 1.1rem; color: #0d6efd; }
+.podium-points { font-size: 1.1rem; color: var(--tt-cyan); }
 .podium-finish { color: #6c757d; font-size: .9rem; }
 
 @media (max-width: 768px) {
