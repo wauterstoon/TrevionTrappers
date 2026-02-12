@@ -7,3 +7,46 @@
   outline: 3px solid #ffc107;
 }
 .status-badge {font-size:.75rem;}
+
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.podium-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+  padding: 1rem;
+  text-align: center;
+}
+
+.podium-rank-1 { min-height: 220px; }
+.podium-rank-2 { min-height: 180px; order: -1; }
+.podium-rank-3 { min-height: 160px; }
+
+.podium-place { font-weight: 700; font-size: 1.2rem; }
+.podium-name { font-weight: 600; }
+.podium-points { font-size: 1.1rem; color: #0d6efd; }
+.podium-finish { color: #6c757d; font-size: .9rem; }
+
+@media (max-width: 768px) {
+  .podium {
+    grid-template-columns: 1fr;
+  }
+  .podium-rank-2,
+  .podium-rank-3,
+  .podium-rank-1 {
+    min-height: auto;
+    order: 0;
+  }
+}

@@ -54,7 +54,7 @@ def ride_detail_view(request, pk):
 @login_required
 def ride_create_view(request):
     if request.method == 'POST':
-        form = RideForm(request.POST)
+        form = RideForm(request.POST, request.FILES)
         if form.is_valid():
             ride = form.save(commit=False)
             ride.created_by = request.user
@@ -75,7 +75,7 @@ def ride_edit_view(request, pk):
         return HttpResponseForbidden('Geen rechten om deze rit te bewerken.')
 
     if request.method == 'POST':
-        form = RideForm(request.POST, instance=ride)
+        form = RideForm(request.POST, request.FILES, instance=ride)
         if form.is_valid():
             form.save()
             messages.success(request, 'Rit bijgewerkt.')
@@ -199,8 +199,12 @@ def leaderboard_view(request):
             my_rank = idx
 
     years = list(range(timezone.now().year - 4, timezone.now().year + 1))
+    podium = board[:3]
+    ranking_list = board[3:]
     return render(request, 'rides/leaderboard.html', {
         'board': board,
+        'podium': podium,
+        'ranking_list': ranking_list,
         'season': season_value,
         'years': years,
         'last_days': last_days,

@@ -8,7 +8,7 @@
       <p class="mb-0">Seizoen: <strong>{{ season_total }} km</strong> | All-time: <strong>{{ total_km }} km</strong></p>
       <p class="mb-0">Uitgereden ritten: <strong>{{ total_finished }}</strong></p>
     </div>
-    {% if profile_user.avatar %}<img src="{{ profile_user.avatar }}" alt="avatar" style="width:72px;height:72px;border-radius:50%;object-fit:cover;">{% endif %}
+    {% if profile_user.avatar %}<img src="{{ profile_user.avatar.url }}" alt="avatar" class="profile-avatar">{% endif %}
   </div>
   {% if user == profile_user %}<a class="btn btn-outline-primary mt-3" href="{% url 'profile_edit' %}">Profiel aanpassen</a>{% endif %}
 </div>

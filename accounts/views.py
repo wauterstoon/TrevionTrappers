@@ -16,7 +16,7 @@ def register_view(request):
         return redirect('dashboard')
 
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -35,7 +35,7 @@ def my_profile_view(request):
 @login_required
 def profile_edit_view(request):
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, instance=request.user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profiel bijgewerkt.')
