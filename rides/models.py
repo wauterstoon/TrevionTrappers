@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, DecimalField, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
@@ -86,6 +86,6 @@ class Participation(models.Model):
         if last_days:
             qs = qs.filter(ride__date__gte=timezone.now().date() - timezone.timedelta(days=last_days))
         return qs.values('user__id', 'user__username', 'user__first_name', 'user__last_name').annotate(
-            points=Coalesce(Sum('km'), 0),
+            points=Coalesce(Sum('km'), Value(0, output_field=DecimalField(max_digits=10, decimal_places=1))),
             finished_count=Count('id'),
         ).order_by('-points', '-finished_count', 'user__username')

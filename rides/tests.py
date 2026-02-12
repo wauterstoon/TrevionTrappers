@@ -63,3 +63,35 @@ class PermissionAndSignupTests(TestCase):
         self.part.refresh_from_db()
         self.assertEqual(self.part.km, 30)
         self.assertEqual(resp.status_code, 302)
+
+
+class DashboardAndLeaderboardViewTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='member', password='x')
+        self.ride = Ride.objects.create(
+            title='Clubrit',
+            date=timezone.now().date() + timedelta(days=1),
+            start_time=time(9, 30),
+            departure='Clubhuis',
+            distance_km=45,
+            level='TEMPO',
+            created_by=self.user,
+        )
+        Participation.objects.create(
+            ride=self.ride,
+            user=self.user,
+            status=Participation.Status.FINISHED,
+            km=45,
+        )
+
+    def test_dashboard_loads(self):
+        c = Client()
+        c.login(username='member', password='x')
+        resp = c.get(reverse('dashboard'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_leaderboard_page_loads(self):
+        c = Client()
+        c.login(username='member', password='x')
+        resp = c.get(reverse('leaderboard'))
+        self.assertEqual(resp.status_code, 200)
